@@ -1,4 +1,5 @@
 const path = require('path');
+const webpack = require("webpack");
 
 module.exports = {
   entry: './static/js/app.tsx',
@@ -17,9 +18,9 @@ module.exports = {
         use: 'ts-loader',
         exclude: /node_modules/
       },
-      { 
-        enforce: "pre", 
-        test: /\.js$/, 
+      {
+        enforce: "pre",
+        test: /\.js$/,
         loader: "source-map-loader"
       },
       {
@@ -61,6 +62,14 @@ module.exports = {
     contentBase: path.resolve(__dirname, "static"),
     watchContentBase: true,
     open: true,
-    port: 9000
-  }
+    port: 9000,
+    historyApiFallback: true,
+    compress: true,
+    hot: true,
+  },
+  plugins: [
+    // ...
+    // применять изменения только при горячей перезагрузке
+    new webpack.HotModuleReplacementPlugin(),
+  ]
 };
